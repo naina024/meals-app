@@ -9,6 +9,7 @@ import 'react-native-gesture-handler';
 
 import { SCREEN } from './constants';
 
+import FavouritesContextProvider from './store/context/favourites.context';
 import Categories from './screens/Categories';
 import Meals from './screens/Meals';
 import MealDetails from './screens/MealDetails';
@@ -52,41 +53,43 @@ export default function App() {
   return (
     <>
       <StatusBar style='light'/>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-              headerStyle: {backgroundColor: '#351401'},
-              headerTintColor: 'white',
-              contentStyle: {backgroundColor: '#3f2f25'}
-          }}
-        >
-          <Stack.Screen 
-            name='Drawer Screen'
-            component={DrawerNavigator} 
-            options={{
-              headerShown: false
+      <FavouritesContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+                headerStyle: {backgroundColor: '#351401'},
+                headerTintColor: 'white',
+                contentStyle: {backgroundColor: '#3f2f25'}
             }}
-          />
-          <Stack.Screen 
-            name={SCREEN.MEALS}
-            component={Meals}
-            // Note: one way of passing dynamic options to stack screen
-            // options={({route, navigation}) => {
-            //   // return dynamic options
-            //   return {
-            //     title: route.params.categoryId
-            //   }
-            // }}
-          />
-          <Stack.Screen 
-            name={SCREEN.MEAL_DETAILS} 
-            component={MealDetails}
-            options={{
-              title: 'About the Meal'
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+          >
+            <Stack.Screen 
+              name='Drawer Screen'
+              component={DrawerNavigator} 
+              options={{
+                headerShown: false
+              }}
+            />
+            <Stack.Screen 
+              name={SCREEN.MEALS}
+              component={Meals}
+              // Note: one way of passing dynamic options to stack screen
+              // options={({route, navigation}) => {
+              //   // return dynamic options
+              //   return {
+              //     title: route.params.categoryId
+              //   }
+              // }}
+            />
+            <Stack.Screen 
+              name={SCREEN.MEAL_DETAILS} 
+              component={MealDetails}
+              options={{
+                title: 'About the Meal'
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </FavouritesContextProvider>
     </>
   );
 }

@@ -1,23 +1,35 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Button } from 'react-native';
 import { MEALS } from '../data/dummy-data';
+import { FavouritesContext } from '../store/context/favourites.context';
 
 import List from '../components/List';
 import IconButton from '../components/ui/IconButton';
 
 function MealDetails({route, navigation}){
 
+    const favMealsContext = useContext(FavouritesContext);
+
     const mealId = route.params.mealId;
     const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
-    pressHandler = () => {
-        console.log('press')
+    const mealIsFavourite = favMealsContext.ids.includes(mealId);
+
+    pressStarHandler = () => {
+        if(mealIsFavourite){
+            favMealsContext.removeFavourite(mealId);
+        } else{
+            favMealsContext.addFavourite(mealId);
+        }
     }
 
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => {
-                return <IconButton icon='star' color='white' onPress={pressHandler}/>
+                return <IconButton
+                    icon={mealIsFavourite ? 'star' : 'star-outline'}
+                    color='white'
+                    onPress={pressStarHandler}/>
               }
         })
     }, [mealId, navigation, pressHandler])
