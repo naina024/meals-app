@@ -16,7 +16,6 @@ function MealDetails({route, navigation}){
 
     useEffect(() => {
         navigation.setOptions({
-            title: selectedMeal.title,
             headerRight: () => {
                 return <IconButton icon='star' color='white' onPress={pressHandler}/>
               }
