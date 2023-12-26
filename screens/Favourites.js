@@ -1,5 +1,7 @@
 import {useContext} from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { MEALS } from '../data/dummy-data';
 import { SCREEN } from '../constants';
 import {FavouritesContext} from '../store/context/favourites.context';
@@ -8,9 +10,12 @@ import MealItem from '../components/MealItem';
 
 function Favourites({navigation}){
     
-    const favMealsContext = useContext(FavouritesContext);
+    // const favMealsContext = useContext(FavouritesContext);
+    const favMealsIds = useSelector((state) => state.favouriteMeals.ids);
+
     const displayedMeals = MEALS.filter(meal => {
-        return favMealsContext.ids.includes(meal.id);
+        // return favMealsContext.ids.includes(meal.id);
+        return favMealsIds.includes(meal.id);
     })
 
     renderMealItem = (itemData) => {

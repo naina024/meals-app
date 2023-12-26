@@ -1,25 +1,33 @@
 import { useEffect, useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { View, Text, Image, StyleSheet, ScrollView, Button } from 'react-native';
 import { MEALS } from '../data/dummy-data';
+
 import { FavouritesContext } from '../store/context/favourites.context';
+import { addFavourite, removeFavourite } from '../store/redux/favourites.slice';
 
 import List from '../components/List';
 import IconButton from '../components/ui/IconButton';
 
 function MealDetails({route, navigation}){
 
-    const favMealsContext = useContext(FavouritesContext);
+    // const favMealsContext = useContext(FavouritesContext);
+    const favMealsIds = useSelector((state) => state.favouriteMeals.ids);
+    const Dispatch = useDispatch();
 
     const mealId = route.params.mealId;
     const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
-    const mealIsFavourite = favMealsContext.ids.includes(mealId);
+    // const mealIsFavourite = favMealsContext.ids.includes(mealId);
+    const mealIsFavourite = favMealsIds.includes(mealId);
 
     pressStarHandler = () => {
         if(mealIsFavourite){
-            favMealsContext.removeFavourite(mealId);
+            // favMealsContext.removeFavourite(mealId);
+            Dispatch(removeFavourite({id: mealId}));
         } else{
-            favMealsContext.addFavourite(mealId);
+            // favMealsContext.addFavourite(mealId);
+            Dispatch(addFavourite({id: mealId}));
         }
     }
 

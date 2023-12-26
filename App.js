@@ -10,6 +10,9 @@ import 'react-native-gesture-handler';
 import { SCREEN } from './constants';
 
 import FavouritesContextProvider from './store/context/favourites.context';
+import { Provider } from 'react-redux';
+import {store} from './store/redux/store';
+
 import Categories from './screens/Categories';
 import Meals from './screens/Meals';
 import MealDetails from './screens/MealDetails';
@@ -53,7 +56,8 @@ export default function App() {
   return (
     <>
       <StatusBar style='light'/>
-      <FavouritesContextProvider>
+      {/* <FavouritesContextProvider> */}
+      <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
@@ -89,7 +93,8 @@ export default function App() {
             />
           </Stack.Navigator>
         </NavigationContainer>
-      </FavouritesContextProvider>
+      </Provider>
+      {/* </FavouritesContextProvider> */}
     </>
   );
 }
